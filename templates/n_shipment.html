@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create New Shipment</title>
+  <link rel="stylesheet" href="{{ url_for('Static', path='/styles/sidebar.css') }}">
+  <link rel="stylesheet" href="{{ url_for('Static', path='/styles/n_shipment.css') }}">
+</head>
+<body>
+
+<div class="container">
+  <form action="/submit-shipment" id="shipmentForm">
+    <div class="row">
+      <div class="column">
+        <div class="form-group">
+          <label for="shipmentNumber">Shipment Number*</label>
+          <input type="text" id="shipmentNumber" name="shipmentNumber" placeholder="Shipment Number">
+        </div>
+        <div class="form-group">
+          <label for="routeDetails">Route Details*</label>
+          <select id="routeDetails" name="routeDetails">
+            <option disabled selected>Select Route</option>
+            <option value="Route-A">Route-A</option>
+            <option value="Route-B">Route-B</option>
+            <option value="Route-C">Route-C</option>
+            <!-- Add options here -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="device">Device*</label>
+          <select id="device" name="device">
+            <option disabled selected>Select Device</option>
+            <option value="Device-1">Device-1</option>
+            <option value="Device-2">Device-2</option>
+            <option value="Device-3">Device-3</option>
+            <!-- Add options here -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="poNumber">PO Number*</label>
+          <input type="text" id="poNumber" name="poNumber" placeholder="PO Number">
+        </div>
+        <div class="form-group">
+          <label for="ndcNumber">NDC Number*</label>
+          <input type="text" id="ndcNumber" name="ndcNumber" placeholder="NDC Number">
+        </div>
+        <div class="form-group">
+          <label for="serialNumber">Serial number of goods*</label>
+          <input type="text" id="serialNumber" name="serialNumber" placeholder="Serial number of goods">
+        </div>
+        <!-- Continue with other input fields... -->
+      </div>
+      <div class="column">
+        <div class="form-group">
+          <label for="containerNumber">Container Number*</label>
+          <input type="text" id="containerNumber" name="containerNumber" placeholder="Container Number">
+        </div>
+        <div class="form-group">
+          <label for="goodsType">Goods Type*</label>
+          <select id="goodsType" name="goodsType">
+            <option disabled selected>Select Goods</option>
+            <option value="G-01">G-01</option>
+            <option value="G-11">G-11</option>
+            <option value="G-10">G-10</option>
+            <!-- Add options here -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="expecteddate">Expected Delivery Date*</label>
+		      <input type="date" id="expecteddate" name="expecteddate">
+        </div>
+        <div class="form-group">
+          <label for="deliveryNumber">Delivery Number*</label>
+          <input type="text" id="deliveryNumber" name="deliveryNumber" placeholder="Delivery Number">
+        </div>
+        <div class="form-group">
+          <label for="batchid">Batch ID*</label>
+          <input type="text" id="batchid" name="batchid" placeholder="Batch ID">
+        </div>
+        <div class="form-group">
+          <label for="shipmentdesc">Shipment Description*</label>
+          <input type="text" id="shipmentdesc" name="shipmentdesc" placeholder="Shipment Description">
+        </div>
+        <!-- Continue with other input fields... -->
+      </div>
+    </div>
+    <div class="row">
+      <button type="submit" class="create">Create Shipment</button>
+      <button class="btn-red" onclick="clearForm()">Clear details</button>
+    </div>
+  </form>
+</div>
+
+
+<div class="sidebar">
+  <div class="sidebar-link">
+        <a href="" class="name">
+          <img src="{{ url_for('Static', path='/Images/exflogoW.png') }}">
+          <div>
+              Exafluence
+          </div>
+      </a>
+  </div>
+  <div class="sidebar-link">
+      <a href="/templates/dashboard.html" class="name">
+          <img src="{{ url_for('Static', path='/Images/dash.png') }}">
+          <div>
+              Dashboard
+          </div>
+      </a>
+  </div>
+  <div class="sidebar-link">
+      <a href="/templates/account.html" class="name">
+          <img src="{{ url_for('Static', path='/Images/profile.png') }}">
+          <div class="name">
+              My Account
+          </div>
+      </a>
+  </div>
+  <div class="sidebar-link">
+      <a href="/templates/m_shipment.html" class="name">
+          <img src="{{ url_for('Static', path='/Images/mship.png') }}">
+           <div class="name">
+              My Shipment
+          </div>
+      </a>
+  </div>
+  <div class="sidebar-link">
+      <a href="/templates/n_shipment.html" class="name">
+          <img src="{{ url_for('Static', path='/Images/nship.png') }}">
+          <div class="name">
+              New Shipment
+          </div>
+      </a>
+  </div>
+  <div class="sidebar-link">
+      <a href="/templates/ddstream.html" class="name">
+          <img src="{{ url_for('Static', path='/Images/ddata.png') }}">
+          <div class="name">
+              Device Data
+          </div>
+      </a>  
+  </div>
+  <div class="sidebar-link">
+    <a href="/templates/index.html" class="name">
+      <img src="{{ url_for('Static', path='/Images/logout.png') }}">
+        <div class="name">
+            Log out
+        </div>
+    </a>  
+  </div>
+</div>
+</div>
+<script>
+  function clearForm() {
+    document.getElementById("shipmentForm").reset();
+  }
+</script>
+
+
+
+
+
+</body>
+</html>

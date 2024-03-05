@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <link rel="stylesheet" href="{{ url_for('Static', path='/styles/signup.css') }}">
+  <title>Signup Page</title>
+</head>
+<body>
+  <div class="background">
+    <div class="signup-box">
+      <form action="/signup" id="signupForm" method="post">
+        <h2>Sign Up</h2>
+          <div class="input-group">
+            <label for="username">Username *</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+          </div>
+          <div class="input-group">
+            <label for="email">Email *</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+          </div>
+          <div class="input-group">
+            <label for="password">Password *</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+          </div>
+          <div class="input-group">
+            <label for="confirm_password">Confirm Password *</label>
+            <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+          </div>
+          <div class="signup-buttons">
+            <button type="submit">Submit</button>
+            <button type="reset">Clear</button>
+          </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      $('#signupForm').validate(); // Activate jQuery Validation
+    });
+
+    document.getElementById('signupForm').addEventListener('submit', function(event) {
+      event.preventDefault(); 
+      const formData = new FormData(this);
+      const formObject = Object.fromEntries(formData); 
+
+      fetch("http://127.0.0.1:8000/signup", { 
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json', 
+        },
+        body: JSON.stringify(formObject),
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Registration Failed");
+        }
+      })
+      .then(data => {
+        swal("Success", "Registration Successful", "success")
+        .then(() => {
+          window.location.href = '/';
+        });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        swal("Error", "Registration Failed", "error");
+      });
+    });
+
+    function sendSignupData(username, email, password) {
+    // Replace the following URL with your actual backend endpoint
+    const signupEndpoint = "http://example.com/api/signup";
+
+    // Prepare the data to be sent to the server
+    const requestData = {
+        username: username,
+        email: email,
+        password: password
+    };
+
+    // Use Axios to make a POST request
+    axios.post(signupEndpoint, requestData)
+        .then(response => {
+            // Check if the response is successful (status code 2xx)
+            if (response.status >= 200 && response.status < 300) {
+                // Perform actions after a successful signup
+                console.log("Signup successful:", response.data);
+
+                // Redirect to a new page or perform other actions
+                window.location.href = "/login";
+            } else {
+                // Handle other status codes if needed
+                console.error("Error in signup request. Status code:", response.status);
+            }
+        })
+        .catch(error => {
+            // Handle errors during the request
+            console.error("Error in signup request:", error);
+
+            // You can display an error message to the user if needed
+            // Example: alert("Signup failed. Please try again.");
+        });
+      }
+
+
+    // Optional: Clear input fields when the "Clear" button is clicked
+    document.querySelector("button[type='reset']").addEventListener("click", function () {
+    document.getElementById("username").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("confirm_password").value = "";
+  });
+  </script>
+    
+</body>
+</html>

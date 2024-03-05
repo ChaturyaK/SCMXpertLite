@@ -1,0 +1,87 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: -webkit-linear-gradient(left,rgb(130, 130, 107),rgb(184, 184, 140),rgb(225, 225, 166),rgb(248, 248, 161));
+}
+
+.background {
+  background-color: rgba(236, 236, 220, 0.649)
+  ; /* Background color for the signup box */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.signup-box {
+  
+  width: 400px;
+  padding: 40px;
+  box-sizing: border-box;
+  text-align: center;
+  color: rgb(130, 130, 107); /* Text color for the signup box */
+  
+}
+
+.signup-box h2 {
+  margin-bottom: 20px; 
+  text-decoration: underline;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  color:rgb(130, 130, 107);
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: azure;
+  outline: none;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(130, 130, 107);
+  color: rgb(130, 130, 107);
+  border-radius: 10px;
+  
+}
+
+.signup-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+button {
+  padding: 10px;
+  width: 48%;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[type="submit"] {
+  background-color: #1c7e45;
+  color: #ffffff;
+}
+
+button[type="reset"] {
+  background-color: #cf3d2d;
+  color: #ffffff;
+}
+
+button:hover{
+  opacity: 0.7;
+}
+
+button:active{
+  opacity: 0.5;
+}

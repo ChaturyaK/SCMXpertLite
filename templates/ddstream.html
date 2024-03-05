@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Data Stream</title>
+    <link rel="stylesheet" href="{{ url_for('Static', path='/styles/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('Static', path='/styles/ddstream.css') }}">
+</head>
+<body>
+	<div class="container">
+		Please select a Device ID to see the Data Stream
+    <div class="id">
+      <label for="deviceid"><br>Device ID*</label>
+      <select id="deviceid" name="deviceid">
+        <option value="">Select Device ID</option>
+        <!-- Add options here -->
+      </select>
+      <button class="data"> Get Data</button>
+    </div>
+	</div>
+
+	<div class="sidebar">
+    <div class="sidebar-link">
+          <a href="" class="name">
+            <img src="{{ url_for('Static', path='/Images/exflogoW.png') }}">
+            <div>
+                Exafluence
+            </div>
+        </a>
+    </div>
+    <div class="sidebar-link">
+        <a href="/templates/dashboard.html" class="name">
+            <img src="{{ url_for('Static', path='/Images/dash.png') }}">
+            <div>
+                Dashboard
+            </div>
+        </a>
+    </div>
+    <div class="sidebar-link">
+        <a href="/templates/account.html" class="name">
+            <img src="{{ url_for('Static', path='/Images/profile.png') }}">
+            <div class="name">
+                My Account
+            </div>
+        </a>
+    </div>
+    <div class="sidebar-link">
+        <a href="/templates/m_shipment.html" class="name">
+            <img src="{{ url_for('Static', path='/Images/mship.png') }}">
+             <div class="name">
+                My Shipment
+            </div>
+        </a>
+    </div>
+    <div class="sidebar-link">
+        <a href="/templates/n_shipment.html" class="name">
+            <img src="{{ url_for('Static', path='/Images/nship.png') }}">
+            <div class="name">
+                New Shipment
+            </div>
+        </a>
+    </div>
+    <div class="sidebar-link">
+        <a href="/templates/ddstream.html" class="name">
+            <img src="{{ url_for('Static', path='/Images/ddata.png') }}">
+            <div class="name">
+                Device Data
+            </div>
+        </a>  
+    </div>
+    <div class="sidebar-link">
+      <a href="/templates/index.html" class="name">
+        <img src="{{ url_for('Static', path='/Images/logout.png') }}">
+          <div class="name">
+              Log out
+          </div>
+      </a>  
+    </div>
+  </div>
+</div>
+	
+</body>
+</html>

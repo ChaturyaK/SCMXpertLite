@@ -1,0 +1,37 @@
+.container{
+  margin-left: 150px;
+  margin-top: 60px;
+  border-radius: 15px;
+  margin-right: 80px;
+  height: 150px;
+  background: -webkit-linear-gradient(left,rgb(130, 130, 107),rgb(184, 184, 140));
+  opacity: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 20px;
+}
+
+.container .data{
+  height: 28px;
+  width: 150px;
+  margin-left: 50px; 
+  background: -webkit-linear-gradient(left,rgb(225, 225, 166),rgb(248, 248, 161));
+  border: none;
+  border-radius: 10px;
+}
+
+.container .data:hover{
+  cursor: pointer;
+  background:rgb(235, 235, 124) ;
+  color: rgb(36, 35, 35);
+  border: solid;
+  border-color: rgb(29, 29, 29);
+  border-width: 1px;
+  transition: 0.4s ease all;
+}
+
+.container .data:active{
+  opacity: 0.7;
+}
