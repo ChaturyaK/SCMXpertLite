@@ -55,6 +55,9 @@
           .then(() => {
             window.location.href = '/login';  // Redirect to the login page
           });
+        } else {
+          // If the form is not valid, show an error message
+          swal("Error", "All fields must be filled.", "error");
         }
       });
     });
