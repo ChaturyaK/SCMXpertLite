@@ -39,28 +39,48 @@
   </div>
 
   <script>
-
     $(document).ready(function() {
     $('#signupForm').validate(); // Activate jQuery Validation
 
     // Event listener for the form submission
     $("#signupForm").submit(function(event) {
-        // Prevent the default form submission
-        event.preventDefault();
-        
-        // Perform form validation
-        if ($('#signupForm').valid()) {
-          // If the form is valid, show success message and redirect
-          swal("Registration Successful")
-          .then(() => {
-            window.location.href = '/login';  // Redirect to the login page
-          });
-        } else {
-          // If the form is not valid, show an error message
-          swal("Error", "All fields must be filled.", "error");
-        }
-      });
+      // Prevent the default form submission
+      event.preventDefault();
+
+      // Perform form validation
+      if ($('#signupForm').valid()) {
+        // If the form is valid, prepare the data
+        var formData = {
+          username: $("#username").val(),
+          email: $("#email").val(),
+          password: $("#password").val(),
+          confirm_password: $("#confirm_password").val()
+        };
+
+        // Send an AJAX request to the server
+        $.ajax({
+          type: "POST",
+          url: "/signup",
+          data: formData,  // Change the content type
+          success: function(response) {
+            // Show success message and redirect
+            swal("Registration Successful").then(() => {
+              window.location.href = '/login';  // Redirect to the login page
+            });
+          },
+          error: function(error) {
+            // Show an error message
+            swal("Error", "Registration failed. Please try again.", "error");
+          }
+        });
+      } else {
+        // If the form is not valid, show an error message
+        swal("Error", "All fields must be filled.", "error");
+      }
     });
+  });
+
+
     
     // Optional: Clear input fields when the "Clear" button is clicked
     document.querySelector("button[type='reset']").addEventListener("click", function () {
