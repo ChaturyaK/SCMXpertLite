@@ -31,7 +31,7 @@
             <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
           </div>
           <div class="signup-buttons">
-            <button type="submit">Submit</button>
+            <button type="submit" id="submitBtn">Submit</button>
             <button type="reset">Clear</button>
           </div>
       </form>
@@ -39,77 +39,26 @@
   </div>
 
   <script>
+
     $(document).ready(function() {
-      $('#signupForm').validate(); // Activate jQuery Validation
-    });
+    $('#signupForm').validate(); // Activate jQuery Validation
 
-    document.getElementById('signupForm').addEventListener('submit', function(event) {
-      event.preventDefault(); 
-      const formData = new FormData(this);
-      const formObject = Object.fromEntries(formData); 
-
-      fetch("http://127.0.0.1:8000/signup", { 
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json', 
-        },
-        body: JSON.stringify(formObject),
-      })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error("Registration Failed");
+    // Event listener for the form submission
+    $("#signupForm").submit(function(event) {
+        // Prevent the default form submission
+        event.preventDefault();
+        
+        // Perform form validation
+        if ($('#signupForm').valid()) {
+          // If the form is valid, show success message and redirect
+          swal("Registration Successful")
+          .then(() => {
+            window.location.href = '/login';  // Redirect to the login page
+          });
         }
-      })
-      .then(data => {
-        swal("Success", "Registration Successful", "success")
-        .then(() => {
-          window.location.href = '/';
-        });
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        swal("Error", "Registration Failed", "error");
       });
     });
-
-    function sendSignupData(username, email, password) {
-    // Replace the following URL with your actual backend endpoint
-    const signupEndpoint = "http://example.com/api/signup";
-
-    // Prepare the data to be sent to the server
-    const requestData = {
-        username: username,
-        email: email,
-        password: password
-    };
-
-    // Use Axios to make a POST request
-    axios.post(signupEndpoint, requestData)
-        .then(response => {
-            // Check if the response is successful (status code 2xx)
-            if (response.status >= 200 && response.status < 300) {
-                // Perform actions after a successful signup
-                console.log("Signup successful:", response.data);
-
-                // Redirect to a new page or perform other actions
-                window.location.href = "/login";
-            } else {
-                // Handle other status codes if needed
-                console.error("Error in signup request. Status code:", response.status);
-            }
-        })
-        .catch(error => {
-            // Handle errors during the request
-            console.error("Error in signup request:", error);
-
-            // You can display an error message to the user if needed
-            // Example: alert("Signup failed. Please try again.");
-        });
-      }
-
-
+    
     // Optional: Clear input fields when the "Clear" button is clicked
     document.querySelector("button[type='reset']").addEventListener("click", function () {
     document.getElementById("username").value = "";
@@ -117,6 +66,7 @@
     document.getElementById("password").value = "";
     document.getElementById("confirm_password").value = "";
   });
+
   </script>
     
 </body>

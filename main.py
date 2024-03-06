@@ -11,8 +11,6 @@ import os
 
 app = FastAPI()
 
-
-
 # Template setup
 templates_directory = os.path.join(os.path.dirname(__file__), 'templates')
 templates = Jinja2Templates(directory=templates_directory)
