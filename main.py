@@ -1,5 +1,5 @@
-from fastapi import FastAPI, HTTPException,Request,Form, status
-from fastapi.responses import JSONResponse,HTMLResponse
+from fastapi import FastAPI, HTTPException,Request,Form, status, Depends
+from fastapi.responses import JSONResponse,HTMLResponse,RedirectResponse
 from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -124,10 +124,24 @@ def sign_up(username: str = Form(...), email: str = Form(...), password: str = F
     }
 
     result = collection.insert_one(user_data)
-
     return {"message": "User has been registered successfully"}
 
-    
+
+class User(BaseModel):
+    email: str
+    password: str
+
+@app.post("/login")
+async def login(request: Request, user: User):
+    # Check if the user exists in MongoDB
+    existing_user = collection.find_one({"email": user.email, "password": user.password})
+    if existing_user:
+        # If the user exists, return a JSON response indicating success
+        return JSONResponse(content={"success": True})
+
+    # If the user doesn't exist or the password is incorrect, return a JSON response indicating failure
+    return JSONResponse(content={"success": False, "error_message": "Invalid email or password"})
+
 
     
     

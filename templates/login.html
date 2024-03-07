@@ -10,27 +10,71 @@
     <div class="background">
         <div class="login-box">
            
-                <form id="loginForm" onsubmit="event.preventDefault(); Signin();">
+                <form id="loginForm">
                     <h2>Log In</h2>
                     <div class="user-box">
-                        <input type="text" id="Email" placeholder="Email">
+                        <input type="text" id="email" placeholder="Email">
                     </div>
                     <div class="user-box">
-                        <input type="password" id="Password" placeholder="Password">
+                        <input type="password" id="password" placeholder="Password">
                     </div>
                     <div class="signup-link">
                         Don't have an account? <a href="/signup">Sign up</a>
                     </div>
                     <div class="buttons">
-                        <button type="button" class="submit-button" onclick="Signin()">Submit</button>
+                        <button type="button" class="submit-button" onclick="signin()">Submit</button>
                         <button type="button" class="clear-button">Clear</button>
                     </div>
                 </form>
             
         </div>
     </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
-    <script src="/Static/scripts/login.js">
+    <script>
+        function signin() {
+            // Retrieve email and password values from the input fields
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+    
+            // You can perform client-side validation here if needed
+            if (email.trim() === "" || password.trim() === "") {
+                alert("Email and password are required");
+                return;
+            }
+    
+            // Make an Axios request to your backend for authentication
+            axios.post("/login", {
+                    email: email,
+                    password: password
+                })
+                .then(function(response) {
+                    // Handle the response from the server
+                    if (response.data.success) {
+                        // If authentication is successful, redirect to the dashboard
+                        alert("Login successful!");
+                        window.location.href = "/dashboard"; // Redirect to the dashboard
+                    } else {
+                        // If authentication fails, display an error message
+                        alert("Login failed. Please check your credentials.");
+                    }
+                })
+                .catch(function(error) {
+                    // Handle errors, e.g., network issues or server errors
+                    console.error("Error during login:", error);
+                    alert("An error occurred during login. Please try again.");
+                });
+        }
+    
+        document.querySelector(".clear-button").addEventListener("click", function() 
+        {
+            document.getElementById("email").value = "";
+            document.getElementById("password").value = "";
+        });
     </script>
+    
+    
+    
+    
 </body>
 </html>
