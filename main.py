@@ -60,6 +60,7 @@ def signup_page(request: Request):
 client = MongoClient("mongodb://localhost:27017/")
 db = client["SCM"]  # Replace with your MongoDB database name
 collection = db["details"]
+nship_collection=db['NewShipments']
 
 # Pydantic model for request body
 class User(BaseModel):
@@ -143,5 +144,29 @@ async def login(request: Request, user: User):
     return JSONResponse(content={"success": False, "error_message": "Invalid email or password"})
 
 
-    
+# Pydantic model for shipment details
+class ShipmentDetails(BaseModel):
+    shipmentNumber: str
+    routeDetails: str
+    device: str
+    poNumber: str
+    ndcNumber: str
+    serialNumber: str
+    containerNumber: str
+    goodsType: str
+    expecteddate: str
+    deliveryNumber: str
+    batchid: str
+    shipmentdesc: str
+
+# Route to handle form submissions and store data in MongoDB
+@app.post("/submit-shipment")
+async def submit_shipment(shipment_details: ShipmentDetails):
+    # Convert Pydantic model to a dictionary
+    shipment_dict = shipment_details.dict()
+
+    # Insert the shipment data into MongoDB
+    result = nship_collection.insert_one(shipment_dict)
+
+    return {"message": "Shipment created successfully"} 
     
