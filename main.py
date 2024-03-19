@@ -10,6 +10,7 @@ from fastapi.staticfiles import StaticFiles
 import os
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
+from datetime import date
 
 app = FastAPI()
 
@@ -170,3 +171,7 @@ async def submit_shipment(shipment_details: ShipmentDetails):
 
     return {"message": "Shipment created successfully"} 
     
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

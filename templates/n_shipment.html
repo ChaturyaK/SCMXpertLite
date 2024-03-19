@@ -10,7 +10,7 @@
 <body>
 
 <div class="container">
-  <form action="/submit-shipment" id="shipmentForm">
+  <form action="/submit-shipment" id="shipmentForm" method="post">
     <div class="row">
       <div class="column">
         <div class="form-group">
@@ -51,7 +51,7 @@
         </div>
         <!-- Continue with other input fields... -->
       </div>
-      <div class="column">
+      <div class="column"> 
         <div class="form-group">
           <label for="containerNumber">Container Number*</label>
           <input type="text" id="containerNumber" name="containerNumber" placeholder="Container Number">
@@ -153,14 +153,61 @@
 </div>
 </div>
 <script>
-  function clearForm() {
+  
+
+  $(document).ready(function() {
+    $('#shipmentForm').validate(); // Activate jQuery Validation
+
+    // Event listener for the form submission
+    $("#shipmentForm").submit(function(event) {
+      // Prevent the default form submission
+      event.preventDefault();
+
+      // Perform form validation
+      if ($('#shipmentForm').valid()) {
+        // If the form is valid, prepare the data
+        var formData = {
+          shipmentNumber:  $("#shipmentNumber").val(),
+          routeDetails:  $("#routeDetails").val(),
+          device:  $("device").val(),
+          poNumber:  $("poNumber").val(),
+          ndcNumber:  $("#ndcNumber").val(),
+          serialNumber:  $("#serialNumber").val(),
+          containerNumber:  $("#cintainerNumber").val(),
+          goodsType:  $("#goodsType").val(),
+          expecteddate:  $("#expecteddate").val(),
+          deliveryNumber:  $("#deliveryNumber").val(),
+          batchid:  $("#batchid").val(),
+          shipmentdesc:  $("#shipmentdesc").val()
+        };
+
+        // Send an AJAX request to the server
+        $.ajax({
+          type: "POST",
+          url: "/newshipment",
+          data: formData,  // Change the content type
+          success: function(response) {
+            // Show success message and redirect
+            swal("New shipment created");
+          },
+          error: function(error) {
+            // Show an error message
+            swal("Error occured.Retry");
+          }
+        });
+      } else {
+        // If the form is not valid, show an error message
+        swal("All fields must be filled.");
+      }
+    });
+  });
+
+
+
+  function clearForm() 
+  {
     document.getElementById("shipmentForm").reset();
   }
 </script>
-
-
-
-
-
 </body>
 </html>
