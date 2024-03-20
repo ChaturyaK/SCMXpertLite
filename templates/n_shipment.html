@@ -10,7 +10,7 @@
 <body>
 
 <div class="container">
-  <form action="/submit-shipment" id="shipmentForm" method="post">
+  <form action="/submit-shipment" id="shipmentForm" method="post" onsubmit="submitForm(event)">
     <div class="row">
       <div class="column">
         <div class="form-group">
@@ -68,7 +68,7 @@
         </div>
         <div class="form-group">
           <label for="expecteddate">Expected Delivery Date*</label>
-		      <input type="date" id="expecteddate" name="expecteddate">
+		      <input type="text" id="expecteddate" name="expecteddate" placeholder="dd/mm/yyyy">
         </div>
         <div class="form-group">
           <label for="deliveryNumber">Delivery Number*</label>
@@ -153,60 +153,41 @@
 </div>
 </div>
 <script>
-  
+  function submitForm(event) {
+    event.preventDefault(); // Prevent the default form submission
 
-  $(document).ready(function() {
-    $('#shipmentForm').validate(); // Activate jQuery Validation
-
-    // Event listener for the form submission
-    $("#shipmentForm").submit(function(event) {
-      // Prevent the default form submission
-      event.preventDefault();
-
-      // Perform form validation
-      if ($('#shipmentForm').valid()) {
-        // If the form is valid, prepare the data
-        var formData = {
-          shipmentNumber:  $("#shipmentNumber").val(),
-          routeDetails:  $("#routeDetails").val(),
-          device:  $("device").val(),
-          poNumber:  $("poNumber").val(),
-          ndcNumber:  $("#ndcNumber").val(),
-          serialNumber:  $("#serialNumber").val(),
-          containerNumber:  $("#cintainerNumber").val(),
-          goodsType:  $("#goodsType").val(),
-          expecteddate:  $("#expecteddate").val(),
-          deliveryNumber:  $("#deliveryNumber").val(),
-          batchid:  $("#batchid").val(),
-          shipmentdesc:  $("#shipmentdesc").val()
-        };
-
-        // Send an AJAX request to the server
-        $.ajax({
-          type: "POST",
-          url: "/newshipment",
-          data: formData,  // Change the content type
-          success: function(response) {
-            // Show success message and redirect
-            swal("New shipment created");
-          },
-          error: function(error) {
-            // Show an error message
-            swal("Error occured.Retry");
-          }
-        });
-      } else {
-        // If the form is not valid, show an error message
-        swal("All fields must be filled.");
-      }
+    // Get form data
+    const formData = new FormData(document.getElementById('shipmentForm'));
+    const formObject = {};
+    formData.forEach((value, key) => {
+      formObject[key] = value;
     });
-  });
+    const jsonData = JSON.stringify(formObject);
 
+    // Send data to server-side script using fetch API
+    fetch('/submit-shipment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonData,
+    })
+    .then(response => {
+      if (response.ok) {
+        alert('Shipment created successfully!');
+        clearForm();
+      } else {
+        alert('Error creating shipment. Please try again.');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('An error occurred. Please try again later.');
+    });
+  }
 
-
-  function clearForm() 
-  {
-    document.getElementById("shipmentForm").reset();
+  function clearForm() {
+    document.getElementById('shipmentForm').reset();
   }
 </script>
 </body>

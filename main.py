@@ -140,7 +140,7 @@ async def login(request: Request, user: User):
     if existing_user:
         # If the user exists, return a JSON response indicating success
         return JSONResponse(content={"success": True})
-
+ 
     # If the user doesn't exist or the password is incorrect, return a JSON response indicating failure
     return JSONResponse(content={"success": False, "error_message": "Invalid email or password"})
 
@@ -169,8 +169,8 @@ async def submit_shipment(shipment_details: ShipmentDetails):
     # Insert the shipment data into MongoDB
     result = nship_collection.insert_one(shipment_dict)
 
-    return {"message": "Shipment created successfully"} 
-    
+    return {"message": "Shipment created successfully"}
+
 
 if __name__ == "__main__":
     import uvicorn
