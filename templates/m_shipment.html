@@ -4,18 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Shipment</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="{{ url_for('Static', path='/styles/sidebar.css') }}">
-	<link rel="stylesheet" href="{{ url_for('Static', path='/styles/m_shipment.css') }}">
+    
+	
+
 </head>
 <body>
-	<div class="container">
-		My Shipment Information
-    <div class="id">
-      <label for="shipmentNumber">Shipment Number*:</label>
-      <input type="text" id="shipmentNumber" name="shipmentNumber" placeholder="Shipment Number">
-      <button class="data">Get Data</button>
+	
+    <div class="container" style="width: 84% ;">
+    <table id="example" class="table table-striped table-bordered" >
+        <thead>
+            <tr>
+                <th>Shipment No.</th>
+                <th>Route Details</th>
+                <th>Device</th>
+                <th>PO No.</th>
+                <th>NDC No.</th>
+                <th>Serial No.</th>
+                <th>Container No.</th>
+                <th>Goods Type</th>
+                <th>Expected Date</th>
+                <th>Delivery No.</th>
+                <th>Batch ID</th>
+                <th>Shipment Desc.</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for shipment in shipments %}
+                <tr>
+                    <td>{{ shipment.shipmentNumber }}</td>
+                    <td>{{ shipment.routeDetails }}</td>
+                    <td>{{ shipment.device }}</td>
+                    <td>{{ shipment.poNumber }}</td>
+                    <td>{{ shipment.ndcNumber }}</td>
+                    <td>{{ shipment.serialNumber }}</td>
+                    <td>{{ shipment.containerNumber }}</td>
+                    <td>{{ shipment.goodsType }}</td>
+                    <td>{{ shipment.expecteddate }}</td>
+                    <td>{{ shipment.deliveryNumber }}</td>
+                    <td>{{ shipment.batchid }}</td>
+                    <td>{{ shipment.shipmentdesc }}</td>
+                </tr>
+            {% endfor %}     
+        </tbody>
+        
+    </table>
     </div>
-	</div>
 
 	<div class="sidebar">
         <div class="sidebar-link">
@@ -76,6 +113,45 @@
         </div>
       </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": 'http://localhost:8000/myshipments',
+                    "type": 'GET',
+                    "dataSrc": "data",  // Specify the key where the data is located in the JSON response
+                    "error": function(xhr, errorType, exception) {
+                        console.log("Error fetching data:", exception);
+                        alert("Error fetching data. Please check console for details.");
+                    }
+                },
+                "columns": [
+                    { "data": "shipmentNumber" },
+                    { "data": "routeDetails" },
+                    { "data": "device" },
+                    { "data": "poNumber" },
+                    { "data": "ndcNumber" },
+                    { "data": "serialNumber" },
+                    { "data": "containerNumber" },
+                    { "data": "goodsType" },
+                    { "data": "expecteddate" },
+                    { "data": "deliveryNumber" },
+                    { "data": "batchid" },
+                    { "data": "shipmentdesc" }
+                ]
+            });
+        });
+    </script>
+    
+    
 
 </body>
 </html>

@@ -4,7 +4,7 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from pymongo import MongoClient
-from bson import ObjectId
+from bson.objectid import ObjectId
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 import os
@@ -13,6 +13,22 @@ from passlib.context import CryptContext
 from datetime import date
 
 app = FastAPI()
+
+# Update the CORS middleware setup
+origins = [
+    "http://127.0.0.1:8000",  # Your frontend origin
+    "http://localhost:8000"   # Additional origin if needed
+]
+
+# Enable CORS with specific origins, methods, and headers
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["*"],
+)
+
 
 # Template setup
 templates_directory = os.path.join(os.path.dirname(__file__), 'templates')
@@ -49,12 +65,12 @@ def signup_page(request: Request):
 
 #my shipment page route
 @app.get("/myshipment", response_class=HTMLResponse)
-def signup_page(request: Request):
+def my_shipments(request: Request):
     return templates.TemplateResponse("m_shipment.html", {"request": request})
 
 #new shipment page route
 @app.get("/newshipment", response_class=HTMLResponse)
-def signup_page(request: Request):
+def new_shipments(request: Request):
     return templates.TemplateResponse("n_shipment.html", {"request": request})
 
 # MongoDB setup
@@ -170,6 +186,26 @@ async def submit_shipment(shipment_details: ShipmentDetails):
     result = nship_collection.insert_one(shipment_dict)
 
     return {"message": "Shipment created successfully"}
+
+# Route to fetch data from NewShipments collection
+@app.get("/myshipments")
+async def get_my_shipments():
+    try:
+        # Fetch all documents from NewShipments collection
+        shipments = nship_collection.find()
+
+        # Convert MongoDB documents to a list of dictionaries
+        shipments_list = []
+        for shipment in shipments:
+            # Convert ObjectId to string for JSON serialization
+            shipment['_id'] = str(shipment['_id'])
+            shipments_list.append(shipment)
+
+        # Convert the list of dictionaries to a JSON response
+        return JSONResponse(content={"data": shipments_list})
+    except Exception as e:
+        # Handle any exceptions and return an error response
+        return JSONResponse(content={"error": str(e)}, status_code=500)
 
 
 if __name__ == "__main__":

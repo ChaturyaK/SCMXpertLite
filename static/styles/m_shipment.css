@@ -1,4 +1,4 @@
-.container{
+.info{
   margin-left: 150px;
   margin-top: 40px;
   border-radius: 15px;
@@ -13,7 +13,7 @@
   font-size: 20px;
 }
 
-.container .id{
+.info .id{
   margin-top: 15px;
   font-size: 20px;
 }
@@ -29,7 +29,7 @@ input[type=text]
   box-sizing: border-box; 
 }
 
-.container .data{
+.info .data{
   height: 35px;
   width: 170px;
   margin-left: 70px;
@@ -40,7 +40,7 @@ input[type=text]
 
 
 
-.container .data:hover{
+.info .data:hover{
   cursor: pointer;
   background:rgb(235, 235, 124) ;
   color: rgb(36, 35, 35);
@@ -50,6 +50,17 @@ input[type=text]
   transition: 0.4s ease all;
 }
 
-.container .data:active{
+.info .data:active{
   opacity: 0.7;
 }
+
+<link rel="stylesheet" href="{{ url_for('Static', path='/styles/m_shipment.css') }}>
+
+<div class="info">
+		My Shipment Information
+    <div class="id">
+      <label for="shipmentNumber">Shipment Number*:</label>
+      <input type="text" id="shipmentNumber" name="shipmentNumber" placeholder="Shipment Number">
+      <button class="data">Get Data</button>
+    </div>
+	</div>
