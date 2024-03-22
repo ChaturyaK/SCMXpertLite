@@ -134,23 +134,25 @@
                     }
                 },
                 "columns": [
-                    { "data": "shipmentNumber" },
-                    { "data": "routeDetails" },
-                    { "data": "device" },
-                    { "data": "poNumber" },
-                    { "data": "ndcNumber" },
-                    { "data": "serialNumber" },
-                    { "data": "containerNumber" },
-                    { "data": "goodsType" },
-                    { "data": "expecteddate" },
-                    { "data": "deliveryNumber" },
-                    { "data": "batchid" },
-                    { "data": "shipmentdesc" }
-                ]
+                    { "data": "shipmentNumber", "searchable": true },
+                    { "data": "routeDetails", "searchable": true },
+                    { "data": "device", "searchable": true },
+                    { "data": "poNumber", "searchable": true },
+                    { "data": "ndcNumber", "searchable": true },
+                    { "data": "serialNumber", "searchable": true },
+                    { "data": "containerNumber", "searchable": true },
+                    { "data": "goodsType", "searchable": true },
+                    { "data": "expecteddate", "searchable": true },
+                    { "data": "deliveryNumber", "searchable": true },
+                    { "data": "batchid", "searchable": true },
+                    { "data": "shipmentdesc", "searchable": true }
+                ],
+                "initComplete": function(settings, json) {
+                    console.log("DataTable initialized successfully.");
+                }
             });
         });
     </script>
-    
     
 
 </body>

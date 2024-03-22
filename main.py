@@ -50,17 +50,17 @@ def signup_page(request: Request):
 
 #dashboardd page route
 @app.get("/dashboard", response_class=HTMLResponse)
-def signup_page(request: Request):
+def dashboard(request: Request):
     return templates.TemplateResponse("dashboard.html", {"request": request})
 
 #my account page route
 @app.get("/account", response_class=HTMLResponse)
-def signup_page(request: Request):
+def account(request: Request):
     return templates.TemplateResponse("account.html", {"request": request})
 
 #device data stream route
 @app.get("/ddstream", response_class=HTMLResponse)
-def signup_page(request: Request):
+def ddstream(request: Request):
     return templates.TemplateResponse("ddstream.html", {"request": request})
 
 #my shipment page route
@@ -85,7 +85,8 @@ class User(BaseModel):
     email: str
     password: str
     confirm_password: str
-
+    role: str="User"
+    
 
 # Handle signup form submission
 # Handle signup form submission
@@ -111,6 +112,7 @@ def sign_up(username: str = Form(...), email: str = Form(...), password: str = F
         "email": email,
         "username": username,
         "password": password,
+        "role": "User"
     }
 
     result = collection.insert_one(user_data)
@@ -139,6 +141,7 @@ def sign_up(username: str = Form(...), email: str = Form(...), password: str = F
         "email": email,
         "username": username,
         "password": password,
+        
     }
 
     result = collection.insert_one(user_data)
