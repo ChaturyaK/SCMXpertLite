@@ -13,11 +13,11 @@
     <div class="info">
       <div class="id">
         <label for="uname">Username:</label>
-        <input type="text" id="shipmentNumber" name="shipmentNumber">
+        <input type="text" id="username" name="username" disabled>
       </div>
       <div class="id">
         <label for="email">Email ID :</label>
-        <input type="text" id="shipmentNumber" name="shipmentNumber">
+        <input type="text" id="email" name="email" disabled>
       </div>
     </div>
 	</div>
@@ -82,5 +82,24 @@
         </div>
       </div>
     </div>
+
+    <script>
+        // Retrieve user details from cookies
+        var username = getCookie('username');
+        var email = getCookie('email');
+        var role = getCookie('role');
+    
+        // Set the retrieved values to the input fields
+        document.getElementById('username').value = username;
+        document.getElementById('email').value = email;
+    
+        // Function to get cookie value by name
+        function getCookie(name) {
+            var value = "; " + document.cookie;
+            var parts = value.split("; " + name + "=");
+            if (parts.length === 2) return parts.pop().split(";").shift();
+        }
+      </script>
+    
 </body>
 </html>

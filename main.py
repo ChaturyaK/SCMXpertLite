@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException,Request,Form, status, Depends
+from fastapi import FastAPI, HTTPException,Request,Form, status, Depends, Response, Cookie
 from fastapi.responses import JSONResponse,HTMLResponse,RedirectResponse
 from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
@@ -10,7 +10,9 @@ from fastapi.staticfiles import StaticFiles
 import os
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
-from datetime import date
+# from jose import JWTError, jwt
+from datetime import datetime, timedelta
+
 
 app = FastAPI()
 
@@ -60,8 +62,12 @@ def account(request: Request):
 
 #device data stream route
 @app.get("/ddstream", response_class=HTMLResponse)
-def ddstream(request: Request):
-    return templates.TemplateResponse("ddstream.html", {"request": request})
+def ddstream(request: Request, role: str = Cookie(None)):
+    if role == "Admin":
+        return templates.TemplateResponse("ddstream.html", {"request": request})
+    else:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access Forbidden")
+
 
 #my shipment page route
 @app.get("/myshipment", response_class=HTMLResponse)
@@ -141,6 +147,7 @@ def sign_up(username: str = Form(...), email: str = Form(...), password: str = F
         "email": email,
         "username": username,
         "password": password,
+        "role": "User",
         
     }
 
@@ -209,6 +216,11 @@ async def get_my_shipments():
     except Exception as e:
         # Handle any exceptions and return an error response
         return JSONResponse(content={"error": str(e)}, status_code=500)
+
+
+
+
+
 
 
 if __name__ == "__main__":

@@ -30,6 +30,9 @@
             <label for="confirm_password">Confirm Password *</label>
             <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
           </div>
+          <div class="login-link">
+            Already have an account? <a href="/login">Log in</a>
+          </div>
           <div class="signup-buttons">
             <button type="submit" id="submitBtn">Submit</button>
             <button type="reset">Clear</button>
@@ -64,9 +67,7 @@
           data: formData,  // Change the content type
           success: function(response) {
             // Show success message and redirect
-            swal("Registration Successful").then(() => {
-              window.location.href = '/login';  // Redirect to the login page
-            });
+            swal("Registration Successful")
           },
           error: function(error) {
             // Show an error message
